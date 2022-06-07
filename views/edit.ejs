@@ -22,13 +22,14 @@
 
         </tr>
         <tr>
-  <form  action="index.html" method="post">
+  <form  action="/update" method="post">
 
-          <td><input type="text" name="product" value="Change product"></td>
-          <td><input type="text" name="brand" value="Change brand's name"></td>
-          <td><input type="text" name="model" value="Change model's name"> </td>
-          <td><input type="text" name="amount" value="" placeholder="Change amount"></td>
-
+          <td><input type="text" name="product" placeholder="Change product"></td>
+          <td><input type="text" name="brand" placeholder="Change brand's name"></td>
+          <td><input type="text" name="model" placeholder="Change model's name"> </td>
+          <td><input type="text" name="amount"  placeholder="Change amount"></td>
+          <td><button type="submit" name="submit" >Edit values</button></td>
+            <input type="hidden" name="id" value=<%= item._id%>>
         </form>
           </tr>
       </table>

@@ -42,6 +42,8 @@ const Item = mongoose.model('item', itemSchema);
  });
 
  app.get("/show", (req, res)=>{
+
+   // Promise here!
    Item.find((err, results)=>{
      if(!err){
        res.render("show", {
@@ -54,6 +56,8 @@ const Item = mongoose.model('item', itemSchema);
  app.get("/edit", (req, res)=>{
    // query parameter
    const id = req.query.edit;
+
+   //  Promise here!
    Item.findById( id, (err, result)=>{
      if(!err){
        res.render("edit", {
@@ -83,6 +87,8 @@ const Item = mongoose.model('item', itemSchema);
 
  app.post("/delete", (req,res)=>{
    const id = req.body.delete;
+
+   // Promise here!
    Item.findByIdAndRemove(id,(err, deleted)=> {
      if(!err){
        console.log(`${deleted} has been deleted`)
@@ -95,9 +101,37 @@ const Item = mongoose.model('item', itemSchema);
  });
 
 
+app.post("/update", (req, res)=> {
+
+  const submitedUpdates = req.body;
+  const itemId = req.body.id;
+
+  // clear additional data from the object
+  delete submitedUpdates.submit;
+  delete submitedUpdates.id;
+
+  const update = {}
+  for(const key in submitedUpdates){
+    if(submitedUpdates[key] !== ""){
+      update[key] = submitedUpdates[key];
+    }
+  };
+
+  Item.findByIdAndUpdate(itemId, update, {new: true}, (err, result)=>{
+    if(!err){
+      console.log(result);
+    }else{
+      console.log(err);
+    }
+  })
 
 
-// ----------- Binds and listen for connections
+  res.redirect("/show");
+})
+
+
+
+// ----------- Binds and listen for the connections
 app.listen(3000, ()=>{
   console.log("Server successfully has started on port 3000");
 })
