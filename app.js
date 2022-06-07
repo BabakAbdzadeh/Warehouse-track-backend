@@ -1,32 +1,100 @@
-//  ----------- Module require ------------
+//  ----------- Modules require ------------
  const express = require('express');
  const bodyParser = require("body-parser");
  const app = express();
+const mongoose = require("mongoose");
 
 
+
+//  ------------ Modules setups ------------
 
 // Set the view engine to ejs
 app.set("view engine", "ejs");
-
-// Use body parser to parse data from ejs file
+// Body parser for parsing data from ejs file
 app.use(bodyParser.urlencoded({
   extended:true
 }));
 
 
- // --------- Routing -------------------
 
+//  ------------- Mongoose and DB ----------------
+// connecting mongoose to mongoDB
+mongoose.connect("mongodb://localhost:27017/mvp");
+
+const itemSchema = new mongoose.Schema({
+  product: String,
+  brand : String,
+  model: String,
+  amount: Number
+});
+
+const Item = mongoose.model('item', itemSchema);
+
+
+
+
+
+ // --------- Routing -------------------
  app.get("/", (req, res)=>{
    res.render("index", {
-     testValue : "to the test page",
+     testValue : "MVP page",
    });
- })
+ });
+
+ app.get("/show", (req, res)=>{
+   Item.find((err, results)=>{
+     if(!err){
+       res.render("show", {
+         items : results,
+       });
+     };
+   });
+ });
+
+ app.get("/edit", (req, res)=>{
+   // query parameter
+   const id = req.query.edit;
+   Item.findById( id, (err, result)=>{
+     if(!err){
+       res.render("edit", {
+         item : result,
+       });
+     };
+
+   });
+ });
 
  app.post("/", (req,res)=>{
-   let input = req.body.postRequestTest;
-   console.log(input);
-   res.redirect("/");
- })
+   const product = req.body.product;
+   const brand = req.body.brand;
+   const model = req.body.model;
+   const amount = req.body.amount;
+
+   const item = new Item({
+     product: product,
+     brand : brand,
+     model : model,
+     amount : amount
+   });
+   item.save();
+
+  res.redirect("/show");
+ });
+
+ app.post("/delete", (req,res)=>{
+   const id = req.body.delete;
+   Item.findByIdAndRemove(id,(err, deleted)=> {
+     if(!err){
+       console.log(`${deleted} has been deleted`)
+     }else{
+       console.log(err)
+     };
+   } );
+   res.redirect("/show");
+
+ });
+
+
 
 
 // ----------- Binds and listen for connections

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Edit page</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Amount</th>
+
+      </tr>
+      <tr>
+
+        <td><%= item.product %></td>
+        <td><%= item.brand %></td>
+        <td><%= item.model %> </td>
+        <td><%= item.amount %></td>
+
+        </tr>
+        <tr>
+  <form  action="index.html" method="post">
+
+          <td><input type="text" name="product" value="Change product"></td>
+          <td><input type="text" name="brand" value="Change brand's name"></td>
+          <td><input type="text" name="model" value="Change model's name"> </td>
+          <td><input type="text" name="amount" value="" placeholder="Change amount"></td>
+
+        </form>
+          </tr>
+      </table>
+  </body>
+</html>
