@@ -21,12 +21,26 @@ app.use(bodyParser.urlencoded({
 // connecting mongoose to mongoDB
 mongoose.connect("mongodb://localhost:27017/mvp");
 
+
+
+
+
+
 const itemSchema = new mongoose.Schema({
-  product: String,
-  brand : String,
-  model: String,
-  amount: Number
-});
+  // UPC-A
+  barcode: Number,
+  quantity: Number,
+
+    floor: Number,
+    shelf: String,
+    level: Number,
+
+    product: String,
+    brand: String,
+    name: String
+
+  }
+)
 
 const Item = mongoose.model('item', itemSchema);
 
@@ -69,17 +83,30 @@ const Item = mongoose.model('item', itemSchema);
  });
 
  app.post("/", (req,res)=>{
+   //  Barcode
+   const barcode = req.body.barcode;
+   const quantity = req.body.quantity;
+   //  Location
+   const floor = req.body.floor;
+   const shelf = req.body.shelf;
+   const level = req.body.level;
+   //  info
    const product = req.body.product;
    const brand = req.body.brand;
-   const model = req.body.model;
-   const amount = req.body.amount;
+   const name = req.body.name;
 
    const item = new Item({
-     product: product,
-     brand : brand,
-     model : model,
-     amount : amount
-   });
+     barcode: barcode,
+     quantity: quantity,
+       floor: floor,
+       shelf: shelf,
+       level: level,
+
+       product: product,
+       brand: brand,
+       name: name
+     },
+   );
    item.save();
 
   res.redirect("/show");
@@ -106,16 +133,19 @@ app.post("/update", (req, res)=> {
   const submitedUpdates = req.body;
   const itemId = req.body.id;
 
-  // clear additional data from the object
+
   delete submitedUpdates.submit;
   delete submitedUpdates.id;
 
-  const update = {}
+  const update = {};
   for(const key in submitedUpdates){
     if(submitedUpdates[key] !== ""){
+
       update[key] = submitedUpdates[key];
+      console.log(update);
     }
   };
+
 
   Item.findByIdAndUpdate(itemId, update, {new: true}, (err, result)=>{
     if(!err){

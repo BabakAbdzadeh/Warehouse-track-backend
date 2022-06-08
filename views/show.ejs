@@ -5,22 +5,67 @@
     <title>show page</title>
   </head>
   <body>
-    <p>
 
-      <table>
+    <% items.forEach(item => { %>
+<table>
+
+
         <tr>
-          <th>Product</th>
-          <th>Brand</th>
-          <th>Model</th>
-          <th>Amount</th>
-          <th>Modification</th>
+          <!-- 1 -->
+          <th>
+            <h3>Product</h3>
+          </th>
+        <td>
+      :
+        </td>
+
+          <th>
+
+            <h3>Location</h3>
+          </th>
+          <td>
+          :
+          </td>
         </tr>
         <tr>
-          <% items.forEach(item => { %>
+          <!-- 2 -->
+          <th>Product</th>
           <td><%= item.product %></td>
+
+          <th>Floor</th>
+          <td><%= item.floor %></td>
+
+        </tr>
+        <tr>
+          <!-- 3 -->
+          <th>Brand</th>
           <td><%= item.brand %></td>
-          <td><%= item.model %> </td>
-          <td><%= item.amount %></td>
+
+
+
+          <th>Shelf</th>
+          <td><%= item.shelf %></td>
+
+        </tr>
+        <tr>
+          <!-- 4 -->
+          <th>Model</th>
+          <td><%= item.name %> </td>
+
+          <th>level</th>
+          <td><%= item.level %></td>
+
+        </tr>
+        <tr>
+          <!-- 5 -->
+          <th>Quantity</th>
+          <td><%= item.quantity %></td>
+
+          <th>Barcode:</th>
+          <td><%= item.barcode %></td>
+        </tr>
+
+        <tr>
           <td>
           <form action="/delete" method="post">
             <button type="submit" name="delete" value=<%=item._id%>>Delete</button>
@@ -29,8 +74,14 @@
             <button type="submit" name="edit" value=<%=item._id%>>Edit</button>
           </form> </td>
         </tr>
-        <% }); %>
-      </table>
+    <!-- //////////////////////////////////////////////////// -->
+
+          <!-- 6 -->
+
+
+        </table>
+      <% }); %>
+
 
 
     </p>

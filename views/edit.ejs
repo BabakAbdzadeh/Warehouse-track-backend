@@ -1,37 +1,119 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Edit page</title>
-  </head>
-  <body>
-    <table>
+
+<head>
+  <meta charset="utf-8">
+  <title>Edit page</title>
+</head>
+
+<body>
+
+
+
+  <table>
+
+
+
+    <form action="/update" method="post">
+
+
       <tr>
+        <!-- 1 -->
+        <th>
+          <h3>Product</h3>
+        </th>
+      </tr>
+      <tr>
+        <!-- 2 -->
         <th>Product</th>
+        <td><%= item.product %></td>
+        <td>
+
+          <input type="text" name="product" placeholder="type of the product">
+        </td>
+      </tr>
+      <tr>
+        <!-- 3 -->
         <th>Brand</th>
+        <td><%= item.brand %></td>
+        <td>
+          <input type="text" name="brand" placeholder="brand">
+        </td>
+      </tr>
+      <tr>
+        <!-- 4 -->
         <th>Model</th>
-        <th>Amount</th>
+        <td><%= item.name %> </td>
+        <td>
+          <input type="text" name="name" placeholder="name or model">
+        </td>
+      </tr>
+      <tr>
+        <th>Quantity</th>
+        <td><%= item.quantity %></td>
+        <td>
+
+          <input type="number" name="quantity" placeholder="quantity">
+        </td>
+        <!-- 5 -->
 
       </tr>
       <tr>
+        <!-- 6 -->
+        <th>
+          <h3>Location</h3>
+        </th>
+      </tr>
+      <tr>
+        <!-- 7 -->
+        <th>Floor</th>
+        <td><%= item.floor %></td>
+        <td>
 
-        <td><%= item.product %></td>
-        <td><%= item.brand %></td>
-        <td><%= item.model %> </td>
-        <td><%= item.amount %></td>
+          <input type="number" name="floor" placeholder="floor">
+        </td>
+      </tr>
+      <tr>
+        <!-- 8 -->
+        <th>Shelf</th>
+        <td><%= item.shelf %></td>
+        <td>
 
-        </tr>
-        <tr>
-  <form  action="/update" method="post">
+          <input type="text" name="shelf" placeholder="shelf">
+        </td>
+      </tr>
+      <tr>
+        <!-- 9 -->
+        <th>level</th>
+        <td><%= item.level %></td>
+        <td>
 
-          <td><input type="text" name="product" placeholder="Change product"></td>
-          <td><input type="text" name="brand" placeholder="Change brand's name"></td>
-          <td><input type="text" name="model" placeholder="Change model's name"> </td>
-          <td><input type="text" name="amount"  placeholder="Change amount"></td>
-          <td><button type="submit" name="submit" >Edit values</button></td>
-            <input type="hidden" name="id" value=<%= item._id%>>
-        </form>
-          </tr>
-      </table>
-  </body>
+          <input type="Number" name="level" placeholder="level">
+        </td>
+      </tr>
+      <tr>
+        <!-- 10 -->
+        <th>Barcode:</th>
+        <td><%= item.barcode %></td>
+        <td>
+
+          <input type="number" name="barcode" placeholder="barcode">
+        </td>
+      </tr>
+      <tr>
+        <!-- 11 -->
+        <td>
+
+          <button type="submit" name="button">Edit</button>
+        </td>
+        <input type="hidden" name="id" value=<%= item._id%>>
+      </tr>
+    </form>
+
+
+
+
+  </table>
+</body>
+
 </html>
