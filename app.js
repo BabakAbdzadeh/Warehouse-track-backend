@@ -3,6 +3,7 @@
  const bodyParser = require("body-parser");
  const app = express();
 const mongoose = require("mongoose");
+const _ = require('lodash');
 
 
 
@@ -91,9 +92,9 @@ const Item = mongoose.model('item', itemSchema);
    const shelf = req.body.shelf;
    const level = req.body.level;
    //  info
-   const product = req.body.product;
-   const brand = req.body.brand;
-   const name = req.body.name;
+   const product = _.startCase(req.body.product);
+   const brand = _.startCase(req.body.brand);
+   const name = _.startCase(req.body.name);
 
    const item = new Item({
      barcode: barcode,
@@ -133,18 +134,20 @@ app.post("/update", (req, res)=> {
   const submitedUpdates = req.body;
   const itemId = req.body.id;
 
-
-  delete submitedUpdates.submit;
   delete submitedUpdates.id;
 
   const update = {};
   for(const key in submitedUpdates){
-    if(submitedUpdates[key] !== ""){
+    if(searchRequest[key] !== "" || submitedUpdates[key] === String){
 
-      update[key] = submitedUpdates[key];
-      console.log(update);
+      filter[key] = _.startCase(submitedUpdates[key]);
+    }else if (submitedUpdates[key] !== "" || submitedUpdates[key] === Number) {
+      filter[key] = submitedUpdates[key];
     }
+    console.log(filter);
   };
+
+
 
 
   Item.findByIdAndUpdate(itemId, update, {new: true}, (err, result)=>{
@@ -153,11 +156,47 @@ app.post("/update", (req, res)=> {
     }else{
       console.log(err);
     }
-  })
+  });
 
 
   res.redirect("/show");
+});
+
+app.get("/search", (req, res)=>{
+      res.render('search');
+});
+
+
+
+
+
+
+
+app.get("/results", (req, res)=>{
+
+const searchRequest = req.query;
+  // Duplicate
+const filter= {};
+for(const key in searchRequest){
+  if(searchRequest[key] !== "" || searchRequest[key] === String){
+
+    filter[key] = _.startCase(searchRequest[key]);
+  }else if (searchRequest[key] !== "" || searchRequest[key] === Number) {
+    filter[key] = searchRequest[key];
+  }
+  console.log(filter);
+};
+
+Item.find(filter, (err,results)=>{
+  if(!err){
+    console.log(`results are: ${results}`);
+    res.render('result',{
+      items : results
+    });
+  }
 })
+
+});
 
 
 
