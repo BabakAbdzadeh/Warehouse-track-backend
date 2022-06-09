@@ -30,59 +30,52 @@
         <tr>
           <!-- 2 -->
           <th>Product</th>
-          <td><%= item.product %></td>
+          <td><%= item.item.product %></td>
 
           <th>Floor</th>
-          <td><%= item.floor %></td>
+          <td><%= item.item.floor %></td>
 
         </tr>
         <tr>
           <!-- 3 -->
           <th>Brand</th>
-          <td><%= item.brand %></td>
+          <td><%= item.item.brand %></td>
 
 
 
           <th>Shelf</th>
-          <td><%= item.shelf %></td>
+          <td><%= item.item.shelf %></td>
 
         </tr>
         <tr>
           <!-- 4 -->
           <th>Model</th>
-          <td><%= item.name %> </td>
+          <td><%= item.item.name %> </td>
 
           <th>level</th>
-          <td><%= item.level %></td>
+          <td><%= item.item.level %></td>
 
         </tr>
         <tr>
           <!-- 5 -->
           <th>Quantity</th>
-          <td><%= item.quantity %></td>
+          <td><%= item.item.quantity %></td>
 
           <th>Barcode:</th>
-          <td><%= item.barcode %></td>
+          <td><%= item.item.barcode %></td>
+        </tr>
+        <tr>
+            <th>Comment:</th>
+            <td><%=item.comment%></td>
         </tr>
 
         <tr>
+          <td>
           <form action="/delete" method="post">
-          <td>
-            <button type="submit" name="delete" value=<%=item._id%>>Delete</button>
-            <input type="hidden" name="type" value="validation">
-          </td>
-          <td>
+            <button type="submit" name="delete" value=<%=item.item._id%>>Delete</button>
 
-            <input type="Delete comment" name="comment" placeholder="Delete Comment">
-          </td>
           </form>
-          <td>
-
-
-          <form action="/edit" method="get">
-            <button type="submit" name="edit" value=<%=item._id%>>Edit infos</button>
-
-          </form> </td>
+         </td>
         </tr>
     <!-- //////////////////////////////////////////////////// -->
 
@@ -94,6 +87,6 @@
 
 
 
-    </p>
+
   </body>
 </html>

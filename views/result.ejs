@@ -2,12 +2,12 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>show page</title>
+    <title>results</title>
   </head>
   <body>
 
     <% items.forEach(item => { %>
-<table>
+  <table>
 
 
         <tr>
@@ -64,36 +64,8 @@
           <th>Barcode:</th>
           <td><%= item.barcode %></td>
         </tr>
+      </table>
+    <% }); %>
 
-        <tr>
-          <form action="/delete" method="post">
-          <td>
-            <button type="submit" name="delete" value=<%=item._id%>>Delete</button>
-            <input type="hidden" name="type" value="validation">
-          </td>
-          <td>
-
-            <input type="Delete comment" name="comment" placeholder="Delete Comment">
-          </td>
-          </form>
-          <td>
-
-
-          <form action="/edit" method="get">
-            <button type="submit" name="edit" value=<%=item._id%>>Edit infos</button>
-
-          </form> </td>
-        </tr>
-    <!-- //////////////////////////////////////////////////// -->
-
-          <!-- 6 -->
-
-
-        </table>
-      <% }); %>
-
-
-
-    </p>
   </body>
 </html>
