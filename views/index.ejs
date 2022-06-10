@@ -5,9 +5,31 @@
     <title>Runnig EJS file</title>
   </head>
   <body>
-    <h1> Hello <%=testValue%> </h1>
+    <h1> Add New Item </h1>
 
-    <form  action="/" method="post">
+
+  <table>
+    <tr>
+      <th>Services:</th>
+    </tr>
+    <tr>
+      <td>
+        <button type="button" name="button">
+          <a href="/search">Search</a>
+        </button>
+      </td>
+      <td>
+        <button type="button" name="button">
+          <a href="/show">Show all items</a>
+        </button>
+      </td>
+
+    </tr>
+  </table>
+
+
+
+    <form  action="/new" method="post">
       <p>Please input the needed information:</p>
       <input type="number" name="barcode" placeholder="barcode">
       <input type="number" name="quantity" placeholder="quantity">

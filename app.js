@@ -138,7 +138,7 @@ app.get("/deleted", (req, res) => {
 });
 
 
-app.post("/", (req, res) => {
+app.post("/new", (req, res) => {
   //  Barcode
   const barcode = req.body.barcode;
   const quantity = req.body.quantity;

@@ -5,6 +5,29 @@
     <title>show page</title>
   </head>
   <body>
+    <h1> Delete Item </h1>
+
+
+  <table>
+    <tr>
+      <th>Services:</th>
+    </tr>
+    <tr>
+      <td>
+        <button type="button" name="button">
+          <a href="/">Add Item</a>
+        </button>
+      </td>
+      <td>
+        <button type="button" name="button">
+          <a href="/search">Search</a>
+        </button>
+      </td>
+      <td>
+        <button type="button" name="button">
+          <a href="/show">Show all items</a>
+        </button>
+      </td>
 
     <% items.forEach(item => { %>
 <table>
@@ -75,6 +98,11 @@
             <button type="submit" name="delete" value=<%=item.item._id%>>Delete</button>
 
           </form>
+         </td>
+         <td>
+           <button type="button" name="button">
+             <a href="/show">Cancel</a>
+           </button>
          </td>
         </tr>
     <!-- //////////////////////////////////////////////////// -->
