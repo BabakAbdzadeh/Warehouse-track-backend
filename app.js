@@ -2,8 +2,9 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose"); //!!!!
 const _ = require('lodash');
+const db = require('./db.js');
 
 
 
@@ -18,52 +19,35 @@ app.use(bodyParser.urlencoded({
 
 
 
-//  ------------- Mongoose and DB ----------------
-// connecting mongoose to mongoDB
-mongoose.connect("mongodb://localhost:27017/mvp");
-
-
-
-
-
-
-const itemSchema = new mongoose.Schema({
-  // UPC-A
-  barcode: Number,
-  quantity: Number,
-
-  floor: Number,
-  shelf: String,
-  level: Number,
-
-  product: String,
-  brand: String,
-  name: String
-
-})
-
-const deletedSchema = new mongoose.Schema({
-  comment: String,
-  item: itemSchema,
-})
-
-const Item = mongoose.model('item', itemSchema);
-const Delete = mongoose.model('delete', deletedSchema);
-
-
-
-
 // --------- Routing -------------------
-app.get("/", (req, res) => {
-  res.render("index", {
-    testValue: "MVP page",
-  });
-});
+// Addinv inventory page
+app.route("/")
+  .get((req, res) => {
+    res.render("index", {
+      testValue: "MVP page",
+    });
+  })
+  .post((req, res) => {
 
+    const item = new db.Item({
+      barcode: req.body.barcode,
+      quantity: req.body.quantity,
+      floor: req.body.floor,
+      shelf: req.body.shelf,
+      level: req.body.level,
+      // using lodash module, useful for later on search
+      product: _.startCase(req.body.product),
+      brand: _.startCase(req.body.brand),
+      name: _.startCase(req.body.name)
+    }, );
+    item.save();
+    res.redirect("/show");
+  });
+
+// get request to show all inventories
 app.get("/show", (req, res) => {
 
-  // Promise here!
-  Item.find((err, results) => {
+  db.Item.find((err, results) => {
     if (!err) {
       res.render("show", {
         items: results,
@@ -76,39 +60,26 @@ app.get("/edit", (req, res) => {
   // query parameter
   const id = req.query.edit;
 
-  //  Promise here!
-  Item.findById(id, (err, result) => {
+  db.Item.findById(id, (err, result) => {
     if (!err) {
       res.render("edit", {
         item: result,
       });
     };
-
   });
 });
-
 
 app.get("/search", (req, res) => {
   res.render('search');
 });
 
-
 app.get("/results", (req, res) => {
 
   const searchRequest = req.query;
-  // Duplicate
-  const filter = {};
-  for (const key in searchRequest) {
-    if (searchRequest[key] !== "" || searchRequest[key] === String) {
 
-      filter[key] = _.startCase(searchRequest[key]);
-    } else if (searchRequest[key] !== "" || searchRequest[key] === Number) {
-      filter[key] = searchRequest[key];
-    }
-    console.log(filter);
-  };
+  const filter = objectValidFinder(searchRequest);
 
-  Item.find(filter, (err, results) => {
+  db.Item.find(filter, (err, results) => {
     if (!err) {
       console.log(`results are: ${results}`);
       res.render('result', {
@@ -119,15 +90,15 @@ app.get("/results", (req, res) => {
 
 });
 
-
+// -------------- Rename -----------------------
 app.get("/deleted", (req, res) => {
   const filter = {
     _id: req.query.id
   };
   console.log(filter);
-  Delete.find(filter, (err, results) => {
+  db.Delete.find(filter, (err, results) => {
     if (!err) {
-      console.log("delete get Page: "+results);
+      console.log("delete get Page: " + results);
       res.render("deleted", {
         items: results,
       });
@@ -138,56 +109,24 @@ app.get("/deleted", (req, res) => {
 });
 
 
-app.post("/new", (req, res) => {
-  //  Barcode
-  const barcode = req.body.barcode;
-  const quantity = req.body.quantity;
-  //  Location
-  const floor = req.body.floor;
-  const shelf = req.body.shelf;
-  const level = req.body.level;
-  //  info
-  const product = _.startCase(req.body.product);
-  const brand = _.startCase(req.body.brand);
-  const name = _.startCase(req.body.name);
-
-  const item = new Item({
-    barcode: barcode,
-    quantity: quantity,
-    floor: floor,
-    shelf: shelf,
-    level: level,
-
-    product: product,
-    brand: brand,
-    name: name
-  }, );
-  item.save();
-
-  res.redirect("/show");
-});
-
-
-
 //  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ developing Feature
-
 app.post("/delete", (req, res) => {
 
   const id = req.body.delete;
-  console.log(req.body.type);
 
-  if(req.body.type === "validation"){
+
+  if (req.body.type === "validation") {
 
     const comment = req.body.comment;
 
     // barcode change for later
-    Item.findById(id, (err, results) => {
+    db.Item.findById(id, (err, results) => {
       if (!err) {
-        const deletedItem = new Delete({
+        const deletedItem = new db.Delete({
           comment: comment,
           item: results
         });
-        console.log(deletedItem);
+
         deletedItem.save();
         res.redirect(`/deleted?id=${deletedItem._id}`);
 
@@ -195,16 +134,10 @@ app.post("/delete", (req, res) => {
         console.log(err);
       }
     });
-
-    // send Id to deleted page to show !
-
   } else {
-    // ##################################################
-    // Promise here!
-    Item.findByIdAndRemove(id, (err, deleted) => {
+
+    db.Item.findByIdAndRemove(id, (err, deleted) => {
       if (!err) {
-
-
 
         console.log(`${deleted} has been deleted`)
       } else {
@@ -213,38 +146,22 @@ app.post("/delete", (req, res) => {
     });
 
     res.redirect("/show");
-
-
-    // ###########################################################
-
   }
 });
-
-
 
 
 app.post("/update", (req, res) => {
 
   const submitedUpdates = req.body;
   const itemId = req.body.id;
-
+  // due to the pointer first have to save id then delete it
   delete submitedUpdates.id;
 
-  const update = {};
-  for (const key in submitedUpdates) {
-    if (submitedUpdates[key] !== "" || submitedUpdates[key] === String) {
+  const update = objectValidFinder(submitedUpdates);
 
-      update[key] = _.startCase(submitedUpdates[key]);
-    } else if (submitedUpdates[key] !== "" || submitedUpdates[key] === Number) {
-      update[key] = submitedUpdates[key];
-    }
-
-  };
-
-
-
-
-  Item.findByIdAndUpdate(itemId, update, {
+  db.Item.findByIdAndUpdate(itemId, {
+    $set: update
+  }, {
     new: true
   }, (err, result) => {
     if (!err) {
@@ -254,10 +171,26 @@ app.post("/update", (req, res) => {
     }
   });
 
-
   res.redirect("/show");
 });
 
+//  -------------------- Functions -----------
+
+// loop through the object (only works with string and number properties)
+// and gets all valid Property/values
+function objectValidFinder(inputObject) {
+  const update = {};
+  for (const key in inputObject) {
+    if (inputObject[key] !== "" || inputObject[key] === String) {
+
+      update[key] = _.startCase(inputObject[key]);
+    } else if (inputObject[key] !== "" || inputObject[key] === Number) {
+      update[key] = inputObject[key];
+    }
+
+  };
+  return update;
+};
 
 
 
