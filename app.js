@@ -18,12 +18,11 @@ app.use(bodyParser.urlencoded({
 
 
 
+// -------------- Target 1 to outsource!--------------
+
 //  ------------- Mongoose and DB ----------------
 // connecting mongoose to mongoDB
 mongoose.connect("mongodb://localhost:27017/mvp");
-
-
-
 
 
 
@@ -51,7 +50,7 @@ const Item = mongoose.model('item', itemSchema);
 const Delete = mongoose.model('delete', deletedSchema);
 
 
-
+//  -------------- finished target 1 ----------------
 
 // --------- Routing -------------------
 app.get("/", (req, res) => {
@@ -96,6 +95,9 @@ app.get("/search", (req, res) => {
 app.get("/results", (req, res) => {
 
   const searchRequest = req.query;
+
+  
+  // ----------------------- Add for functionality --------------------------
   // Duplicate
   const filter = {};
   for (const key in searchRequest) {
@@ -119,7 +121,7 @@ app.get("/results", (req, res) => {
 
 });
 
-
+// -------------- Rename -----------------------
 app.get("/deleted", (req, res) => {
   const filter = {
     _id: req.query.id
@@ -139,28 +141,17 @@ app.get("/deleted", (req, res) => {
 
 
 app.post("/", (req, res) => {
-  //  Barcode
-  const barcode = req.body.barcode;
-  const quantity = req.body.quantity;
-  //  Location
-  const floor = req.body.floor;
-  const shelf = req.body.shelf;
-  const level = req.body.level;
-  //  info
-  const product = _.startCase(req.body.product);
-  const brand = _.startCase(req.body.brand);
-  const name = _.startCase(req.body.name);
 
   const item = new Item({
-    barcode: barcode,
-    quantity: quantity,
-    floor: floor,
-    shelf: shelf,
-    level: level,
+    barcode: req.body.barcode,
+    quantity: req.body.quantity,
+    floor: req.body.floor,
+    shelf: req.body.shelf,
+    level: req.body.level,
 
-    product: product,
-    brand: brand,
-    name: name
+    product: _.startCase(req.body.product),
+    brand: _.startCase(req.body.brand),
+    name: _.startCase(req.body.name)
   }, );
   item.save();
 
@@ -174,7 +165,7 @@ app.post("/", (req, res) => {
 app.post("/delete", (req, res) => {
 
   const id = req.body.delete;
-  console.log(req.body.type);
+
 
   if(req.body.type === "validation"){
 
@@ -187,7 +178,7 @@ app.post("/delete", (req, res) => {
           comment: comment,
           item: results
         });
-        console.log(deletedItem);
+
         deletedItem.save();
         res.redirect(`/deleted?id=${deletedItem._id}`);
 
@@ -231,6 +222,9 @@ app.post("/update", (req, res) => {
 
   delete submitedUpdates.id;
 
+
+
+// ----------------------- Add for functionality --------------------------
   const update = {};
   for (const key in submitedUpdates) {
     if (submitedUpdates[key] !== "" || submitedUpdates[key] === String) {
@@ -242,9 +236,6 @@ app.post("/update", (req, res) => {
 
   };
 
-
-
-
   Item.findByIdAndUpdate(itemId, update, {
     new: true
   }, (err, result) => {
@@ -255,11 +246,8 @@ app.post("/update", (req, res) => {
     }
   });
 
-
   res.redirect("/show");
 });
-
-
 
 
 // ----------- Binds and listen for the connections
