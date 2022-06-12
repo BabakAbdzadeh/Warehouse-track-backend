@@ -5,35 +5,10 @@ const mongoose = require("mongoose");
 const _ = require('lodash');
 app.use(express.json());
 
-
-
-//  ------------- Mongoose and DB ----------------
-// connecting mongoose to mongoDB
-mongoose.connect("mongodb://localhost:27017/mvp");
-
-
-const itemSchema = new mongoose.Schema({
-  // UPC-A
-  barcode: Number,
-  quantity: Number,
-
-  floor: Number,
-  shelf: String,
-  level: Number,
-
-  product: String,
-  brand: String,
-  name: String
-
-})
-
-const deletedSchema = new mongoose.Schema({
-  comment: String,
-  item: itemSchema,
-})
-
-const Item = mongoose.model('item', itemSchema);
-const Delete = mongoose.model('delete', deletedSchema);
+// Calling the Db
+const db = require('./db.js');
+const Item = db.Item;
+const Delete = db.Delete;
 
 
 // -------------- API ------------------------
