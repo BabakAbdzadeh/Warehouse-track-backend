@@ -8,6 +8,34 @@
 
 <body>
 
+  <body>
+    <h1> Edit Item </h1>
+
+
+  <table>
+    <tr>
+      <th>Services:</th>
+    </tr>
+    <tr>
+      <td>
+        <button type="button" name="button">
+          <a href="/">Add Item</a>
+        </button>
+      </td>
+      <td>
+        <button type="button" name="button">
+          <a href="/search">Search</a>
+        </button>
+      </td>
+      <td>
+        <button type="button" name="button">
+          <a href="/show">Show all items</a>
+        </button>
+      </td>
+
+    </tr>
+  </table>
+
 
 
   <table>
@@ -107,6 +135,11 @@
           <button type="submit">Edit</button>
         </td>
         <input type="hidden" name="id" value=<%= item._id%>>
+        <td>
+          <button type="button" name="button">
+            <a href="/show">Cancel</a>
+          </button>
+        </td>
       </tr>
     </form>
 

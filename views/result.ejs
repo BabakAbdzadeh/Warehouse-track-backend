@@ -1,71 +1,117 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>results</title>
-  </head>
-  <body>
 
-    <% items.forEach(item => { %>
+<head>
+  <meta charset="utf-8">
+  <title>results</title>
+</head>
+
+<body>
+
+  <h1> Results </h1>
+
+
+<table>
+  <tr>
+    <th>Services:</th>
+  </tr>
+  <tr>
+    <td>
+      <button type="button" name="button">
+        <a href="/">Add item</a>
+      </button>
+    </td>
+    <td>
+      <button type="button" name="button">
+        <a href="/show">Show all items</a>
+      </button>
+    </td>
+    <td>
+      <button type="button" name="button">
+        <a href="/search">search</a>
+      </button>
+    </td>
+
+  </tr>
+</table>
+
+  <% items.forEach(item => { %>
   <table>
 
+    <tr>
+      <!-- 1 -->
+      <th>
+        <h3>Product</h3>
+      </th>
+      <td>
+        :
+      </td>
+      <th>
+        <h3>Location</h3>
+      </th>
+      <td>
+        :
+      </td>
+    </tr>
+    <tr>
+      <!-- 2 -->
+      <th>Product</th>
+      <td><%= item.product %></td>
 
-        <tr>
-          <!-- 1 -->
-          <th>
-            <h3>Product</h3>
-          </th>
-        <td>
-      :
-        </td>
+      <th>Floor</th>
+      <td><%= item.floor %></td>
 
-          <th>
-
-            <h3>Location</h3>
-          </th>
-          <td>
-          :
-          </td>
-        </tr>
-        <tr>
-          <!-- 2 -->
-          <th>Product</th>
-          <td><%= item.product %></td>
-
-          <th>Floor</th>
-          <td><%= item.floor %></td>
-
-        </tr>
-        <tr>
-          <!-- 3 -->
-          <th>Brand</th>
-          <td><%= item.brand %></td>
+    </tr>
+    <tr>
+      <!-- 3 -->
+      <th>Brand</th>
+      <td><%= item.brand %></td>
 
 
 
-          <th>Shelf</th>
-          <td><%= item.shelf %></td>
+      <th>Shelf</th>
+      <td><%= item.shelf %></td>
 
-        </tr>
-        <tr>
-          <!-- 4 -->
-          <th>Model</th>
-          <td><%= item.name %> </td>
+    </tr>
+    <tr>
+      <!-- 4 -->
+      <th>Model</th>
+      <td><%= item.name %> </td>
 
-          <th>level</th>
-          <td><%= item.level %></td>
+      <th>level</th>
+      <td><%= item.level %></td>
 
-        </tr>
-        <tr>
-          <!-- 5 -->
-          <th>Quantity</th>
-          <td><%= item.quantity %></td>
+    </tr>
+    <tr>
+      <!-- 5 -->
+      <th>Quantity</th>
+      <td><%= item.quantity %></td>
 
-          <th>Barcode:</th>
-          <td><%= item.barcode %></td>
-        </tr>
-      </table>
-    <% }); %>
+      <th>Barcode:</th>
+      <td><%= item.barcode %></td>
+    </tr>
+    <tr>
+      <form action="/delete" method="post">
+      <td>
+        <button type="submit" name="delete" value=<%=item._id%>>Delete</button>
+        <input type="hidden" name="type" value="validation">
+      </td>
+      <td>
 
-  </body>
+        <input type="Delete comment" name="comment" placeholder="Delete Comment">
+      </td>
+      </form>
+      <td>
+
+
+      <form action="/edit" method="get">
+        <button type="submit" name="edit" value=<%=item._id%>>Edit infos</button>
+
+      </form> </td>
+    </tr>
+  </table>
+  <% }); %>
+
+</body>
+
 </html>
