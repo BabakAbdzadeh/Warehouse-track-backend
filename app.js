@@ -108,6 +108,10 @@ app.get("/deleted", (req, res) => {
   });
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 843487e08d1e53a9971b61625fd29e79dae18f95
 //  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ developing Feature
 app.post("/delete", (req, res) => {
 
