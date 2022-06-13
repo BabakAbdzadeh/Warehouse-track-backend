@@ -43,9 +43,13 @@ there is a function name `objectValidFinder` which loops through objects and sav
 
 #### **API**:
 
+**api** is also written in app.js file.
+
+
 | Endpoint       | Type           | Description  |
 | :-------------: |:-------------:| :-----:|
-| /api/inventory      | GET |  | fetches all data |
+| /api/inventory      | GET |   Fetches all data |
+| /api/inventory/{id}      | GET |   search for item/s, required:{id} |
 | /api/inventory     | POST      |   create a new item|
 | /api/inventory/{id} | PUT      |   updated item, (id required) |
 | /api/inventory/{id}/{comment}| DELETE | delete an Item and info and comment in deleted item collection | 
