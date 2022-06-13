@@ -8,7 +8,7 @@ It is an app for inventory managment.
 ## Technologies:
 
 - NodeJs
-- ExpressJs
+- ExpressJS
 - MongooseJS
 - Lodash (js module)
 - MongoDB
