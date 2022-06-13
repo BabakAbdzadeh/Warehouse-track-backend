@@ -21,19 +21,19 @@ https://replit.com/@babakabdzadeh/inventory?v=1
 
 ## How does the application work
 
-- **EJS**: 
+### **EJS**: 
 Using `mongoose` to talk with database with `get` & `post` methods to render and get data from **EJS** files which is based on two different patterns: 
 - looping on datas comming to **ejs** file
 - sending data with submit buttons
 
-- **db.js**:
+### **db.js**:
 
 this file contains the **Schema** and **model** for *items* and *deleted*
 
 - **deleted** can be used later for showing deleted items with their **comments**
 
 
-- **app.js**:
+### **app.js**:
 
 On the *app.js* side, each route has similiar name to their *EJS* file, due to the heavy load of work for university wasn't possible to edit them in proper way.
 
