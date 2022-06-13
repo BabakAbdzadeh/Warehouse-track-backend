@@ -41,5 +41,13 @@ there is a function name `objectValidFinder` which loops through objects and sav
 
 - `app.post(delete)` does all the required functionality but I also added `deletedItem` document for lateron updates so then application shows all deleted items, now its possible only by direct commands from shell.
 
+#### **API**:
+
+| Endpoint       | Type           | Description  |
+| ------------- |:-------------:| -----:|
+| /api/inventory      | GET |  | fetches all data |
+| /api/inventory     | POST      |   create a new item|
+| /api/inventory/{id} | PUT      |   updated item, (id required) |
+| /api/inventory/{id}/{comment}| DELETE | delete an Item and info and comment in deleted item collection | 
 
 
