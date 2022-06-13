@@ -34,7 +34,9 @@
 
   </tr>
 </table>
-
+<% if(items === "empty"){ %>
+  <h3>Couldn't Find Any Item!</h3>
+<% }else{ %>
   <% items.forEach(item => { %>
   <table>
 
@@ -110,7 +112,7 @@
       </form> </td>
     </tr>
   </table>
-  <% }); %>
+  <% }); } %>
 
 </body>
 

@@ -81,10 +81,17 @@ app.get("/results", (req, res) => {
 
   db.Item.find(filter, (err, results) => {
     if (!err) {
-      console.log(`results are: ${results}`);
-      res.render('result', {
-        items: results
-      });
+        console.log(`${Object.keys(results).length}`);
+      if(Object.keys(results).length === 0 ){
+        res.render('result',{
+          items: "empty"
+        });
+
+      }else{
+        res.render('result', {
+          items: results
+        });
+      }
     }
   })
 
@@ -108,10 +115,7 @@ app.get("/deleted", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 843487e08d1e53a9971b61625fd29e79dae18f95
 //  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ developing Feature
 app.post("/delete", (req, res) => {
 
