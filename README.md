@@ -41,7 +41,7 @@ there is a function name `objectValidFinder` which loops through objects and sav
 
 - `app.post(delete)` does all the required functionality but I also added `deletedItem` document for lateron updates so then application shows all deleted items, now its possible only by direct commands from shell.
 
-#### **API**:
+### **API**:
 
 **api** is also written in app.js file.
 
@@ -54,4 +54,12 @@ there is a function name `objectValidFinder` which loops through objects and sav
 | /api/inventory/{id} | PUT      |   updated item, (id required) |
 | /api/inventory/{id}/{comment}| DELETE | delete an Item and info and comment in deleted item collection | 
 
+- Example for API:
+ 
+     `curl --header "Content-Type: application/json" \
+--request POST \ 
+--data '{"barcode":"990008879","brand":"HTC"}' \ 
+https://replit.com/@babakabdzadeh/inventory?v=1/api/inventory
+`
 
+Creates an Item with given barcode and brand. has to be *json*.
