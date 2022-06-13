@@ -44,7 +44,7 @@ there is a function name `objectValidFinder` which loops through objects and sav
 #### **API**:
 
 | Endpoint       | Type           | Description  |
-| ------------- |:-------------:| -----:|
+| :-------------: |:-------------:| :-----:|
 | /api/inventory      | GET |  | fetches all data |
 | /api/inventory     | POST      |   create a new item|
 | /api/inventory/{id} | PUT      |   updated item, (id required) |
