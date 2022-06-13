@@ -22,12 +22,22 @@ https://replit.com/@babakabdzadeh/inventory?v=1
 ## How does the application work
 
 **EJS**: 
-Using `mongoose` to talk with database and `get` & `post` method to render and get data from **EJS** files which is based on two different patterns: 
+Using `mongoose` to talk with database with `get` & `post` methods to render and get data from **EJS** files which is based on two different patterns: 
 - looping on datas comming to **ejs** file
 - sending data with submit buttons
 
-On the *app.js** side, each route has similiar name to their *EJS* file, due to the heavy load of work for university wasn't possible to edit them in proper way.
+**db.js**:
+this file contains the **Schema** and **model** for *items* and *deleted*
+
+- **deleted** can be used later for showing deleted items with their **comments**
+
+
+**APP.js**:
+On the *app.js* side, each route has similiar name to their *EJS* file, due to the heavy load of work for university wasn't possible to edit them in proper way.
 
 there is a function name `objectValidFinder` which loops through objects and save only `property:values` that exist in another `update` object.
+
+- `app.post(delete)` does all the required functionality but I also added `deletedItem` document for lateron updates so then application shows all deleted items, now its possible only by direct commands from shell.
+
 
 
