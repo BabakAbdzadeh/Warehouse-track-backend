@@ -1,4 +1,4 @@
-# Warehouse tracker (backend) 
+# inventory tracking (backend) 
 
 ## What does it do? 
 It is an inventory tracking web application for a logistics company.
