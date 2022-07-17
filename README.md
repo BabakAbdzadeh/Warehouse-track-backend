@@ -1,11 +1,20 @@
 # Warehouse tracker (backend) 
 
-This application is made based on this [requirments](https://docs.google.com/document/d/19WMSrMWsiB2itu9nUscfilNJTQlFXmTQpi-Q9-CHRbg/edit?usp=sharing)
+## What does it do? 
+It is an inventory tracking web application for a logistics company.
+
+
 
 It is an app for inventory managment.
 ## Link to run the app on Replit:
 https://replit.com/@babakabdzadeh/inventory?v=1
-
+Basic CRUD Functionality:
+ - Create inventory items
+ - Edit Them
+ - Delete Them
+ - View a list of them
+  Extra feature:
+ - When deleting, allow deletion comments and undeletion
 
 
 ## Technologies:
