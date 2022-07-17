@@ -1,4 +1,4 @@
-# Warehouse tracker (backend) project fall 2022
+# Warehouse tracker (backend) 
 
 This application is made based on this [requirments](https://docs.google.com/document/d/19WMSrMWsiB2itu9nUscfilNJTQlFXmTQpi-Q9-CHRbg/edit?usp=sharing)
 
